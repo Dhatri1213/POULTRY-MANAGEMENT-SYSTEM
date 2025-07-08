@@ -1,0 +1,29 @@
+function doPost(e) {
+  try {
+    // Parse the incoming JSON payload
+    var data = JSON.parse(e.postData.contents);
+
+    // Extract values from the payload
+    var temp = data.temp;
+    var smoke = data.smoke;
+    var latencyEspToPi = data.latency_esp_to_pi;
+    var latencyPiToSheets = data.latency_pi_to_sheets;
+
+    // Open the Google Sheet (replace with your sheet's ID and name)
+    var sheet = SpreadsheetApp.openById("1QkqlPYg7hktZE6SiI6g7dQ8HBFCzyT9dupiT690LJuc");  // Replace with your actual sheet ID
+
+    // Get the current timestamp
+    var timestamp = new Date();
+
+    // Append the data to the sheet (timestamp, temperature, smoke, latency_esp_to_pi, latency_pi_to_sheets)
+    sheet.appendRow([timestamp, temp, smoke, latencyEspToPi, latencyPiToSheets]);
+
+    // Return success response
+    return ContentService.createTextOutput("Success");
+
+  } catch (e) {
+    // Log error for debugging
+    Logger.log(e.toString());
+    return ContentService.createTextOutput("Failed: " + e.toString());
+  }
+}
