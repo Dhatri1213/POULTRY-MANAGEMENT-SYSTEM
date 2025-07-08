@@ -51,7 +51,7 @@ void setup() {
   client.setServer(MQTT_SERVER, MQTT_PORT);
 
   // Initialize time via NTP
-  configTime(0, 0, "pool.ntp.org"); // 19800 = IST offset in seconds (UTC+5:30)
+  configTime(0, 0, "pool.ntp.org"); 
 
   Serial.print("Waiting for NTP time sync");
   while (time(nullptr) < 100000) {
