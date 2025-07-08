@@ -1,0 +1,22 @@
+function doPost(e) {
+  try {
+    var data = JSON.parse(e.postData.contents);
+
+    var sheet = SpreadsheetApp.openById("11NP7xW-C7hEzB-TW5KW_TSvzvWN9aeTMzbI1MO0Fm0w").getSheetByName("Sheet1");
+
+    var timestamp = new Date();
+
+    // Parse the "values" string: "34.70,15,5"
+    var values = data.values.split(",");
+    var temp = parseFloat(values[0]);
+    var smoke = parseInt(values[1]);
+    var latency = parseInt(values[2]);
+
+    sheet.appendRow([timestamp, temp, smoke, latency]);
+
+    return ContentService.createTextOutput("Success");
+  } catch (e) {
+    Logger.log(e.toString());
+    return ContentService.createTextOutput("Failed: " + e.toString());
+  }
+}
